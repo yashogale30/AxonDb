@@ -33,6 +33,9 @@ def cmd_remember(args):
     try:
         result = remember(store, args.text, source="cli")
         memory = result["memory"]
+        if result["duplicate"]:
+            print(f"Already remembered [{_short(memory.id)}] {memory.text}")
+            return 0
         print(f"Remembered [{_short(memory.id)}] {memory.text}")
         names = ", ".join(f"{n.name} ({n.type})" for n in result["entities"])
         print(f"  entities: {names or 'none'}")

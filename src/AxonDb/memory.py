@@ -35,11 +35,30 @@ def _has_edge(store, src, dst, rel):
     return False
 
 
+def _existing_memory(store, text):
+    """A current memory with exactly this sentence, ignoring case."""
+    low = text.lower()
+    for node in store.all_nodes():
+        if node.type == "memory" and node.text.lower() == low:
+            return node
+    return None
+
+
 def remember(store, text, source=""):
     """Store one sentence and wire it into the graph."""
     text = _clean(text)
     if not text:
         raise ValueError("Cannot remember an empty sentence.")
+
+    existing = _existing_memory(store, text)
+    if existing is not None:
+        return {
+            "memory": existing,
+            "entities": [],
+            "relations": 0,
+            "similar": 0,
+            "duplicate": True,
+        }
 
     vec = embed_mod.embed(text)
     # Look for similar memories before adding this one, so it cannot match itself.
@@ -101,6 +120,7 @@ def remember(store, text, source=""):
         "entities": list(unique.values()),
         "relations": relation_count,
         "similar": len(similar),
+        "duplicate": False,
     }
 
 

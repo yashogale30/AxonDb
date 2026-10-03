@@ -1,5 +1,0 @@
-<!doctype html>
-<html lang="en"><meta charset="utf-8"><title>AxonDb Viewer</title>
-<style>body{font:16px system-ui;max-width:760px;margin:3rem auto;padding:0 1rem}form{display:flex;gap:.5rem}input{flex:1;padding:.7rem}button{padding:.7rem 1rem}li{margin:.8rem 0}</style>
-<h1>AxonDb</h1><form><input id="q" placeholder="Recall a memory"><button>Search</button></form><ol id="results"></ol>
-<script>document.querySelector('form').onsubmit=async event=>{event.preventDefault();const q=document.querySelector('#q').value;const data=await fetch('/recall?q='+encodeURIComponent(q)).then(r=>r.json());document.querySelector('#results').innerHTML=data.map(x=>`<li>${x.content} <small>${(x.score??0).toFixed(3)}</small></li>`).join('')}</script>

@@ -109,3 +109,11 @@ def test_forget_ignores_entities(store):
     result = remember(store, M1)
     entity = result["entities"][0]
     assert forget(store, entity.id) is False
+
+def test_remembering_same_sentence_twice_does_not_duplicate(store):
+    first = remember(store, M1)
+    second = remember(store, M1)
+    assert second["duplicate"] is True
+    assert second["memory"].id == first["memory"].id
+    memories = [n for n in store.all_nodes() if n.type == "memory"]
+    assert len(memories) == 1
