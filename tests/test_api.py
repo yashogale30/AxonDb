@@ -79,3 +79,8 @@ def test_recall_returns_answers_and_path(client):
 
 def test_recall_rejects_empty_question(client):
     assert client.get("/recall", params={"q": "  "}).status_code == 400
+
+def test_viewer_page_is_served(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "AxonDb" in response.text

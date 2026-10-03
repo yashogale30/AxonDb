@@ -1,5 +1,5 @@
 import numpy as np
-
+# import re
 from . import embed as embed_mod
 from .config import SIMILAR_EDGE_THRESHOLD
 from .extract import extract
@@ -8,7 +8,9 @@ from .resolve import resolve_entity
 from .store import vec_to_bytes
 
 MAX_SIMILAR = 5
-
+PERSON_SUBJECT_RELATIONS = {
+    "leads", "works_on", "reports_to", "lives_in", "prefers", "tests", "designs",
+}
 
 def _clean(text):
     return " ".join(text.split())
@@ -42,7 +44,6 @@ def _existing_memory(store, text):
         if node.type == "memory" and node.text.lower() == low:
             return node
     return None
-
 
 def remember(store, text, source=""):
     """Store one sentence and wire it into the graph."""
@@ -96,13 +97,16 @@ def remember(store, text, source=""):
         tail_node = entities.get(tail.lower())
         if head_node is None or tail_node is None or head_node.id == tail_node.id:
             continue
+        if rel in PERSON_SUBJECT_RELATIONS and head_node.type == "organization":
+            store.set_type(head_node.id, "person")
+            head_node.type = "person"
         if _has_edge(store, head_node.id, tail_node.id, rel):
             continue
         store.add_edge(
             Edge(id="", src=head_node.id, dst=tail_node.id, rel=rel, source=memory.id)
         )
         relation_count += 1
-
+    
     for other_id, score in similar:
         store.add_edge(
             Edge(

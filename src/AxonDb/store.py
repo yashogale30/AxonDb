@@ -53,6 +53,9 @@ class Store(ABC):
     @abstractmethod
     def all_edges(self): ...
 
+    @abstractmethod
+    def set_type(self, node_id, node_type): ...
+
 
 class SqliteStore(Store):
     def __init__(self, path=None):
@@ -165,3 +168,9 @@ class SqliteStore(Store):
             "SELECT * FROM edges WHERE valid_to IS NULL"
         ).fetchall()
         return [self._edge(r) for r in rows]
+
+    def set_type(self, node_id, node_type):
+        self.conn.execute(
+            "UPDATE nodes SET type = ? WHERE id = ?", (node_type, node_id)
+        )
+        self.conn.commit()

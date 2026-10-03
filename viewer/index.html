@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AxonDb viewer</title>
+<style>
+  :root { --bg: #141414; --panel: #1d1d1d; --text: #e8e6e1; --muted: #8a8780; --accent: #e8a24a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100vh; display: flex; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+  #side { width: 380px; padding: 16px; overflow-y: auto; background: var(--panel); border-right: 1px solid #2c2c2c; }
+  #main { flex: 1; position: relative; }
+  svg { width: 100%; height: 100%; display: block; }
+  h1 { font-size: 18px; margin: 0 0 12px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 18px 0 6px; }
+  #ask { display: flex; gap: 6px; }
+  input { flex: 1; min-width: 0; padding: 8px 10px; border-radius: 8px; border: 1px solid #3a3a3a; background: #111; color: var(--text); }
+  button { padding: 8px 12px; border-radius: 8px; border: 0; background: var(--accent); color: #111; font-weight: 600; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--muted); border: 1px solid #3a3a3a; }
+  #status { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  ul, ol { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 7px; font-size: 14px; line-height: 1.35; }
+  .rel { color: var(--accent); font-weight: 600; }
+  #legend { position: absolute; left: 12px; bottom: 12px; font-size: 12px; color: var(--muted); }
+  .name { fill: #cfcdc7; font-size: 11px; text-anchor: middle; pointer-events: none; }
+  .rellabel { fill: #a89a78; font-size: 10px; text-anchor: middle; pointer-events: none; }
+  .memlabel { fill: #f1efe9; font-size: 10px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #141414; stroke-width: 3px; }
+</style>
+</head>
+<body>
+<div id="side">
+  <h1>AxonDb</h1>
+  <form id="ask">
+    <input id="q" placeholder="Ask a question" autocomplete="off">
+    <button type="submit">Recall</button>
+    <button type="button" id="clear" class="ghost">Clear</button>
+  </form>
+  <div id="status"></div>
+  <h2>Answers</h2>
+  <ul id="answers"></ul>
+  <h2>Path followed</h2>
+  <ol id="path"></ol>
+</div>
+<div id="main">
+  <svg id="graph"></svg>
+  <div id="legend"></div>
+</div>
+
+<script src="d3.min.js"></script>
+<script>
+const COLORS = {
+  person: "#6ea8fe", project: "#e8a24a", tool: "#6fcf97", organization: "#c792ea",
+  preference: "#f2c94c", location: "#56ccf2", memory: "#666666",
+};
+
+const svg = d3.select("#graph");
+const root = svg.append("g");
+svg.call(d3.zoom().scaleExtent([0.2, 4]).on("zoom", (e) => root.attr("transform", e.transform)));
+
+let nodes = [], links = [], nodeById = new Map();
+let nodeSel, linkSel, relSel, nameSel, memSel, sim;
+
+const isTyped = (d) => d.rel !== "mentions" && d.rel !== "similar_to";
+const baseRadius = (d) => (d.type === "memory" ? 5 : 11);
+const baseStroke = (d) => (d.rel === "mentions" ? "#3a3a3a" : d.rel === "similar_to" ? "#55557a" : "#8a7a5a");
+const baseWidth = (d) => (isTyped(d) ? 2 : 1);
+const edgeKey = (a, b, rel) => [a, b].sort().join("|") + "|" + rel;
+const linkKey = (d) => edgeKey(d.source.id, d.target.id, d.rel);
+
+function el(tag, text, cls) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (cls) node.className = cls;
+  return node;
+}
+
+function label(id) {
+  if (id === "query") return "question";
+  const n = nodeById.get(id);
+  if (!n) return id.slice(0, 8);
+  const text = n.type === "memory" ? n.text : n.name;
+  return text.length > 48 ? text.slice(0, 45) + "..." : text;
+}
+
+function drawLegend() {
+  const box = document.getElementById("legend");
+  box.textContent = "";
+  Object.entries(COLORS).forEach(([type, color]) => {
+    const item = el("span", " " + type);
+    const dot = el("span", "\u25CF");
+    dot.style.color = color;
+    item.prepend(dot);
+    item.style.marginRight = "10px";
+    box.appendChild(item);
+  });
+}
+
+function makeDrag() {
+  return d3.drag()
+    .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; });
+}
+
+function draw() {
+  if (sim) sim.stop();
+  root.selectAll("*").remove();
+  const w = svg.node().clientWidth, h = svg.node().clientHeight;
+
+  sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id((d) => d.id).distance((d) => (d.rel === "mentions" ? 55 : 85)))
+    .force("charge", d3.forceManyBody().strength(-170))
+    .force("center", d3.forceCenter(w / 2, h / 2))
+    .force("collide", d3.forceCollide(15));
+
+  linkSel = root.append("g").selectAll("line").data(links).join("line")
+    .attr("stroke", baseStroke).attr("stroke-width", baseWidth)
+    .attr("stroke-dasharray", (d) => (d.rel === "similar_to" ? "4 3" : null));
+
+  relSel = root.append("g").selectAll("text").data(links.filter(isTyped)).join("text")
+    .attr("class", "rellabel").text((d) => d.rel.replace(/_/g, " "));
+
+  nodeSel = root.append("g").selectAll("circle").data(nodes).join("circle")
+    .attr("r", baseRadius).attr("fill", (d) => COLORS[d.type] || "#999")
+    .attr("stroke", "#141414").attr("stroke-width", 1.5)
+    .call(makeDrag());
+  nodeSel.append("title").text((d) => (d.type === "memory" ? d.text : d.name + " (" + d.type + ")"));
+
+  nameSel = root.append("g").selectAll("text").data(nodes.filter((d) => d.type !== "memory")).join("text")
+    .attr("class", "name").text((d) => d.name);
+      memSel = root.append("g").selectAll("text").data(nodes.filter((d) => d.type === "memory")).join("text")
+    .attr("class", "memlabel").attr("opacity", 0)
+    .text((d) => (d.text.length > 44 ? d.text.slice(0, 41) + "..." : d.text));
+
+  sim.on("tick", () => {
+    linkSel.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y)
+      .attr("x2", (d) => d.target.x).attr("y2", (d) => d.target.y);
+    relSel.attr("x", (d) => (d.source.x + d.target.x) / 2).attr("y", (d) => (d.source.y + d.target.y) / 2 - 3);
+    nodeSel.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+    nameSel.attr("x", (d) => d.x).attr("y", (d) => d.y - 16);
+    memSel.attr("x", (d) => d.x).attr("y", (d) => d.y + 18);
+  });
+}
+
+function clearPanel() {
+  document.getElementById("answers").textContent = "";
+  document.getElementById("path").textContent = "";
+  document.getElementById("status").textContent = "";
+}
+
+function resetView() {
+  nodeSel.attr("opacity", 1).attr("stroke", "#141414").attr("stroke-width", 1.5).attr("r", baseRadius);
+  linkSel.attr("opacity", 1).attr("stroke", baseStroke).attr("stroke-width", baseWidth);
+  relSel.attr("opacity", 1);
+  nameSel.attr("opacity", 1);
+  memSel.attr("opacity", 0);
+  clearPanel();
+}
+
+function showResult(data) {
+  clearPanel();
+  if (!data.answers.length) {
+    document.getElementById("status").textContent = "Nothing remembered yet.";
+    return;
+  }
+
+  const answerIds = new Set(data.answers.map((a) => a.id));
+  const linkedIds = new Set();
+  const pathNodes = new Set(answerIds);
+  const pathEdges = new Set();
+  data.path.forEach((s) => {
+    if (s.src !== "query") pathNodes.add(s.src);
+    pathNodes.add(s.dst);
+    if (s.rel === "linked") linkedIds.add(s.dst);
+    pathEdges.add(edgeKey(s.src, s.dst, s.rel));
+  });
+
+  nodeSel
+    .attr("opacity", (d) => (pathNodes.has(d.id) ? 1 : 0.08))
+    .attr("stroke", (d) => (answerIds.has(d.id) ? "#ffffff" : linkedIds.has(d.id) ? "#e8a24a" : "#141414"))
+    .attr("stroke-width", (d) => (answerIds.has(d.id) || linkedIds.has(d.id) ? 3 : 1.5))
+    .attr("r", (d) => baseRadius(d) + (answerIds.has(d.id) ? 4 : 0));
+  linkSel
+    .attr("opacity", (d) => (pathEdges.has(linkKey(d)) ? 1 : 0.05))
+    .attr("stroke", (d) => (pathEdges.has(linkKey(d)) ? "#ffffff" : baseStroke(d)))
+    .attr("stroke-width", (d) => (pathEdges.has(linkKey(d)) ? 3 : baseWidth(d)));
+  relSel.attr("opacity", (d) => (pathEdges.has(linkKey(d)) ? 1 : 0.05));
+  nameSel.attr("opacity", (d) => (pathNodes.has(d.id) ? 1 : 0.15));
+  memSel.attr("opacity", (d) => (answerIds.has(d.id) ? 1 : 0));
+
+  const answers = document.getElementById("answers");
+  data.answers.forEach((a) => answers.appendChild(el("li", a.text)));
+
+  const path = document.getElementById("path");
+  data.path.forEach((s) => {
+    const li = el("li");
+    li.appendChild(el("span", label(s.src)));
+    li.appendChild(el("span", "  \u2192[" + s.rel + " " + s.score.toFixed(2) + "]\u2192  ", "rel"));
+    li.appendChild(el("span", label(s.dst)));
+    path.appendChild(li);
+  });
+}
+
+async function load() {
+  const status = document.getElementById("status");
+  status.textContent = "Loading graph...";
+  const data = await (await fetch("/graph")).json();
+  nodes = data.nodes.map((n) => ({ ...n }));
+  nodeById = new Map(nodes.map((n) => [n.id, n]));
+  links = data.edges
+    .filter((e) => nodeById.has(e.src) && nodeById.has(e.dst))
+    .map((e) => ({ source: e.src, target: e.dst, rel: e.rel, id: e.id }));
+  draw();
+  drawLegend();
+  status.textContent = nodes.length + " nodes, " + links.length + " edges";
+}
+
+document.getElementById("ask").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const q = document.getElementById("q").value.trim();
+  if (!q) return;
+  const status = document.getElementById("status");
+  status.textContent = "Searching...";
+  const res = await fetch("/recall?q=" + encodeURIComponent(q));
+  if (!res.ok) {
+    status.textContent = "Something went wrong. Check the terminal where the server runs.";
+    return;
+  }
+  showResult(await res.json());
+});
+
+document.getElementById("clear").addEventListener("click", () => {
+  document.getElementById("q").value = "";
+  resetView();
+  document.getElementById("status").textContent = nodes.length + " nodes, " + links.length + " edges";
+});
+
+load();
+</script>
+</body>
+</html>

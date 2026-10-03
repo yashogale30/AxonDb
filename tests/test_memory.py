@@ -117,3 +117,22 @@ def test_remembering_same_sentence_twice_does_not_duplicate(store):
     assert second["memory"].id == first["memory"].id
     memories = [n for n in store.all_nodes() if n.type == "memory"]
     assert len(memories) == 1
+
+def test_person_relation_fixes_organization_label(store, monkeypatch):
+    text = "Meera prefers working in Figma."
+    monkeypatch.setitem(VECTORS, text.lower(), unit((6, 1.0)))
+    monkeypatch.setitem(VECTORS, "meera", unit((0, 1.0)))
+    monkeypatch.setitem(VECTORS, "figma", unit((1, 1.0)))
+    monkeypatch.setitem(
+        EXTRACTED,
+        text,
+        {
+            "entities": [("Meera", "organization"), ("Figma", "preference")],
+            "relations": [("Meera", "prefers", "Figma")],
+        },
+    )
+    result = remember(store, text)
+    meera = [n for n in result["entities"] if n.name == "Meera"][0]
+    assert meera.type == "person"
+    stored = [n for n in store.all_nodes() if n.name == "Meera"][0]
+    assert stored.type == "person"
