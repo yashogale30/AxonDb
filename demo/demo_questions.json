@@ -1,0 +1,8 @@
+[
+  {"question": "Which cache does the project Priya leads use?", "expected": "Redis"},
+  {"question": "Which cloud is Priya's project deployed on?", "expected": "AWS"},
+  {"question": "Which streaming tool does the project Arjun leads use?", "expected": "Kafka"},
+  {"question": "Which database does the project Kiran tests use?", "expected": "Postgres"},
+  {"question": "Which tool does Meera use to design for the project Priya leads?", "expected": "Figma"},
+  {"question": "Where does Priya live now?", "expected": "Mumbai"}
+]

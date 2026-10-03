@@ -1,0 +1,22 @@
+[project]
+name = "AxonDb"
+version = "0.1.0"
+description = "Local graph memory for AI agents with explainable recall paths"
+readme = "README.md"
+dependencies = [
+    "numpy",
+    "sentence_transformers",
+    "gliner2",
+    "fastapi",
+    "uvicorn",
+    "mcp",
+]
+
+[project.scripts]
+AxonDb = "AxonDb.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

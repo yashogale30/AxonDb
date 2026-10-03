@@ -1,0 +1,22 @@
+[
+  "Priya leads the Atlas project.",
+  "Atlas is a ticket booking platform built for concert venues.",
+  "Atlas uses Redis for seat locking.",
+  "Atlas stores its bookings in Postgres.",
+  "Rahul is a backend engineer on the Atlas project.",
+  "Rahul reports to Priya.",
+  "Arjun leads the Orion project.",
+  "Orion is a data pipeline that processes ticket sales events.",
+  "Orion uses Kafka for streaming events.",
+  "Orion is deployed on Google Cloud.",
+  "Atlas is deployed on AWS.",
+  "Meera designs the booking interface for Atlas.",
+  "Meera prefers working in Figma.",
+  "Priya lives in Pune.",
+  "Priya moved from Pune to Mumbai last month.",
+  "Rahul moved from the Atlas project to the Orion project.",
+  "Arjun reports to Neha, the engineering director.",
+  "Neha asked the Atlas team to reduce Redis costs.",
+  "Kiran is a QA engineer who tests Atlas releases.",
+  "Kiran prefers writing tests in pytest."
+]
