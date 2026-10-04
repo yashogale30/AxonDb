@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import tempfile
 from pathlib import Path
@@ -57,8 +58,9 @@ def summarise(rows, label, lines):
 
 
 def main():
-    memories = json.loads((HERE / "bench_memories.json").read_text())
-    questions = json.loads((HERE / "bench_questions.json").read_text())
+    name = os.environ.get("BENCH", "bench")
+    memories = json.loads((HERE / (name + "_memories.json")).read_text())
+    questions = json.loads((HERE / (name + "_questions.json")).read_text())
     lines = []
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -104,7 +106,7 @@ def main():
     output = "\n".join(lines)
     print()
     print(output)
-    (HERE / "results.md").write_text(output + "\n")
+    (HERE / ("results_" + name + ".md")).write_text(output + "\n")
 
 
 if __name__ == "__main__":
