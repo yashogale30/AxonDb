@@ -6,10 +6,11 @@ readme = "README.md"
 dependencies = [
     "numpy",
     "sentence_transformers",
-    "gliner2",
+    "gliner2[local]",
     "fastapi",
     "uvicorn",
     "mcp",
+    "httpx",
 ]
 
 [project.scripts]

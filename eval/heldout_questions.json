@@ -1,0 +1,17 @@
+[
+  {"question": "Which database does Pulse use?", "answer": "MongoDB", "hops": 1},
+  {"question": "Where does Zoya live?", "answer": "Nairobi", "hops": 1},
+  {"question": "Which cloud is Nova deployed on?", "answer": "AWS", "hops": 1},
+  {"question": "Which cloud provider hosts the project Mira leads?", "answer": "Azure", "hops": 2},
+  {"question": "Which programming language is the app that Rohan leads built with?", "answer": "Swift", "hops": 2},
+  {"question": "Which search engine does the project Kabir leads rely on?", "answer": "Elasticsearch", "hops": 2},
+  {"question": "Which tool does the designer of the Nova app prefer?", "answer": "Sketch", "hops": 2},
+  {"question": "Where does the person who leads Pulse live?", "answer": "Singapore", "hops": 2},
+  {"question": "Which testing tool does the QA engineer for Harbor prefer?", "answer": "Playwright", "hops": 2},
+  {"question": "Where does the manager of Nisha live?", "answer": "Toronto", "hops": 2},
+  {"question": "Which editor does the intern on Pulse prefer?", "answer": "IntelliJ", "hops": 2},
+  {"question": "Which cloud hosts the project that Nisha's manager leads?", "answer": "Google Cloud", "hops": 3},
+  {"question": "Which database does the project that Arun's manager leads use?", "answer": "MongoDB", "hops": 3},
+  {"question": "Which build tool is used by the backend engineer on the project Mira leads?", "answer": "Gradle", "hops": 3},
+  {"question": "Which chat tool receives alerts from the project that Rohan's direct report leads?", "answer": "Slack", "hops": 3}
+]
