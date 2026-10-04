@@ -1,0 +1,502 @@
+[
+  {
+    "question": "Which database does Kestrel use?",
+    "answer": "PostgreSQL",
+    "hops": 1
+  },
+  {
+    "question": "Which cloud is Kestrel deployed on?",
+    "answer": "AWS",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is Marlin built with?",
+    "answer": "Kotlin",
+    "hops": 1
+  },
+  {
+    "question": "Which event streaming platform does Marlin use?",
+    "answer": "Kafka",
+    "hops": 1
+  },
+  {
+    "question": "Which database does Quartz use?",
+    "answer": "DynamoDB",
+    "hops": 1
+  },
+  {
+    "question": "Which cloud is Quartz deployed on?",
+    "answer": "Google Cloud",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is Falcon built with?",
+    "answer": "Python",
+    "hops": 1
+  },
+  {
+    "question": "Which search engine does Falcon use?",
+    "answer": "Elasticsearch",
+    "hops": 1
+  },
+  {
+    "question": "Which database does Juniper use?",
+    "answer": "ClickHouse",
+    "hops": 1
+  },
+  {
+    "question": "Which cloud is Juniper deployed on?",
+    "answer": "Oracle Cloud",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is Cobalt built with?",
+    "answer": "TypeScript",
+    "hops": 1
+  },
+  {
+    "question": "Which workflow scheduler does Cobalt use?",
+    "answer": "Airflow",
+    "hops": 1
+  },
+  {
+    "question": "Which database does Ember use?",
+    "answer": "MariaDB",
+    "hops": 1
+  },
+  {
+    "question": "Which cloud is Ember deployed on?",
+    "answer": "Hetzner",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is Saffron built with?",
+    "answer": "Ruby",
+    "hops": 1
+  },
+  {
+    "question": "Which payment provider does Saffron use?",
+    "answer": "Stripe",
+    "hops": 1
+  },
+  {
+    "question": "Which database does Tundra use?",
+    "answer": "TimescaleDB",
+    "hops": 1
+  },
+  {
+    "question": "Which cloud is Tundra deployed on?",
+    "answer": "Linode",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is Willow built with?",
+    "answer": "Haskell",
+    "hops": 1
+  },
+  {
+    "question": "Which caching tool does Willow use?",
+    "answer": "Memcached",
+    "hops": 1
+  },
+  {
+    "question": "Where does Kavya live?",
+    "answer": "Hyderabad",
+    "hops": 1
+  },
+  {
+    "question": "Where does Mei live?",
+    "answer": "Shanghai",
+    "hops": 1
+  },
+  {
+    "question": "Where does Olga live?",
+    "answer": "Prague",
+    "hops": 1
+  },
+  {
+    "question": "Where does Qadir live?",
+    "answer": "Karachi",
+    "hops": 1
+  },
+  {
+    "question": "Where does Soren live?",
+    "answer": "Copenhagen",
+    "hops": 1
+  },
+  {
+    "question": "Which programming language is the project Aarav leads built with?",
+    "answer": "Rust",
+    "hops": 2
+  },
+  {
+    "question": "Which cache does the project Aarav leads use?",
+    "answer": "Redis",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Aarav leads deployed on?",
+    "answer": "AWS",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Bianca leads use?",
+    "answer": "MongoDB",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Bianca leads deployed on?",
+    "answer": "Azure",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Bianca leads built with?",
+    "answer": "Kotlin",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Chen leads built with?",
+    "answer": "Swift",
+    "hops": 2
+  },
+  {
+    "question": "Which message broker does the project Chen leads use?",
+    "answer": "RabbitMQ",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Chen leads use?",
+    "answer": "DynamoDB",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Dmitri leads use?",
+    "answer": "Cassandra",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Dmitri leads deployed on?",
+    "answer": "DigitalOcean",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Dmitri leads built with?",
+    "answer": "Python",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Elena leads built with?",
+    "answer": "Elixir",
+    "hops": 2
+  },
+  {
+    "question": "Which dashboard tool does the project Elena leads use?",
+    "answer": "Grafana",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Elena leads deployed on?",
+    "answer": "Oracle Cloud",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Farid leads use?",
+    "answer": "CockroachDB",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Farid leads deployed on?",
+    "answer": "IBM Cloud",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Gauri leads built with?",
+    "answer": "Scala",
+    "hops": 2
+  },
+  {
+    "question": "Which SMS provider does the project Gauri leads use?",
+    "answer": "Twilio",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Hugo leads use?",
+    "answer": "Firestore",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Hugo leads deployed on?",
+    "answer": "Heroku",
+    "hops": 2
+  },
+  {
+    "question": "Which programming language is the project Imani leads built with?",
+    "answer": "Dart",
+    "hops": 2
+  },
+  {
+    "question": "Which monitoring tool does the project Imani leads use?",
+    "answer": "Prometheus",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project Jonas leads use?",
+    "answer": "Couchbase",
+    "hops": 2
+  },
+  {
+    "question": "Which cloud is the project Jonas leads deployed on?",
+    "answer": "Vultr",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Kavya live?",
+    "answer": "Pune",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Liam live?",
+    "answer": "Lisbon",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Mei live?",
+    "answer": "Singapore",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Nikhil live?",
+    "answer": "Warsaw",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Olga live?",
+    "answer": "Madrid",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Pedro live?",
+    "answer": "Dubai",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Qadir live?",
+    "answer": "Bengaluru",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Rosa live?",
+    "answer": "Toronto",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Soren live?",
+    "answer": "Nairobi",
+    "hops": 2
+  },
+  {
+    "question": "Where does the manager of Talia live?",
+    "answer": "Oslo",
+    "hops": 2
+  },
+  {
+    "question": "Where does the person who leads Marlin live?",
+    "answer": "Lisbon",
+    "hops": 2
+  },
+  {
+    "question": "Where does the person who leads Falcon live?",
+    "answer": "Warsaw",
+    "hops": 2
+  },
+  {
+    "question": "Where does the person who leads Cobalt live?",
+    "answer": "Dubai",
+    "hops": 2
+  },
+  {
+    "question": "Where does the person who leads Saffron live?",
+    "answer": "Toronto",
+    "hops": 2
+  },
+  {
+    "question": "Where does the person who leads Willow live?",
+    "answer": "Oslo",
+    "hops": 2
+  },
+  {
+    "question": "Where does the backend engineer on Kestrel live?",
+    "answer": "Hyderabad",
+    "hops": 2
+  },
+  {
+    "question": "Where does the backend engineer on Quartz live?",
+    "answer": "Shanghai",
+    "hops": 2
+  },
+  {
+    "question": "Where does the backend engineer on Juniper live?",
+    "answer": "Prague",
+    "hops": 2
+  },
+  {
+    "question": "Where does the backend engineer on Ember live?",
+    "answer": "Karachi",
+    "hops": 2
+  },
+  {
+    "question": "Where does the backend engineer on Tundra live?",
+    "answer": "Copenhagen",
+    "hops": 2
+  },
+  {
+    "question": "Which database does the project that Kavya's manager leads use?",
+    "answer": "PostgreSQL",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Kavya's manager leads deployed on?",
+    "answer": "AWS",
+    "hops": 3
+  },
+  {
+    "question": "Which cache does the project that Kavya's manager leads use?",
+    "answer": "Redis",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Liam's manager leads built with?",
+    "answer": "Kotlin",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Liam's manager leads deployed on?",
+    "answer": "Azure",
+    "hops": 3
+  },
+  {
+    "question": "Which event streaming platform does the project that Liam's manager leads use?",
+    "answer": "Kafka",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Mei's manager leads built with?",
+    "answer": "Swift",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Mei's manager leads use?",
+    "answer": "DynamoDB",
+    "hops": 3
+  },
+  {
+    "question": "Which message broker does the project that Mei's manager leads use?",
+    "answer": "RabbitMQ",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Nikhil's manager leads built with?",
+    "answer": "Python",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Nikhil's manager leads use?",
+    "answer": "Cassandra",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Nikhil's manager leads deployed on?",
+    "answer": "DigitalOcean",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Olga's manager leads use?",
+    "answer": "ClickHouse",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Olga's manager leads deployed on?",
+    "answer": "Oracle Cloud",
+    "hops": 3
+  },
+  {
+    "question": "Which dashboard tool does the project that Olga's manager leads use?",
+    "answer": "Grafana",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Pedro's manager leads built with?",
+    "answer": "TypeScript",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Pedro's manager leads deployed on?",
+    "answer": "IBM Cloud",
+    "hops": 3
+  },
+  {
+    "question": "Which workflow scheduler does the project that Pedro's manager leads use?",
+    "answer": "Airflow",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Qadir's manager leads built with?",
+    "answer": "Scala",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Qadir's manager leads use?",
+    "answer": "MariaDB",
+    "hops": 3
+  },
+  {
+    "question": "Which SMS provider does the project that Qadir's manager leads use?",
+    "answer": "Twilio",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Rosa's manager leads built with?",
+    "answer": "Ruby",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Rosa's manager leads use?",
+    "answer": "Firestore",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Rosa's manager leads deployed on?",
+    "answer": "Heroku",
+    "hops": 3
+  },
+  {
+    "question": "Which database does the project that Soren's manager leads use?",
+    "answer": "TimescaleDB",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Soren's manager leads deployed on?",
+    "answer": "Linode",
+    "hops": 3
+  },
+  {
+    "question": "Which monitoring tool does the project that Soren's manager leads use?",
+    "answer": "Prometheus",
+    "hops": 3
+  },
+  {
+    "question": "Which programming language is the project that Talia's manager leads built with?",
+    "answer": "Haskell",
+    "hops": 3
+  },
+  {
+    "question": "Which cloud is the project that Talia's manager leads deployed on?",
+    "answer": "Vultr",
+    "hops": 3
+  },
+  {
+    "question": "Which caching tool does the project that Talia's manager leads use?",
+    "answer": "Memcached",
+    "hops": 3
+  }
+]
