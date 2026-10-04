@@ -1,5 +1,0 @@
-[
-  {"question": "When is deployment?", "expected": "Thursday at 10:00"},
-  {"question": "Who owns metrics?", "expected": "Maya"},
-  {"question": "When is staging refreshed?", "expected": "every night"}
-]

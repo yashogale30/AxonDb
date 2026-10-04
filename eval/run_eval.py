@@ -58,7 +58,7 @@ def summarise(rows, label, lines):
 
 
 def main():
-    name = os.environ.get("BENCH", "bench")
+    name = os.environ.get("BENCH", "big")
     memories = json.loads((HERE / (name + "_memories.json")).read_text())
     questions = json.loads((HERE / (name + "_questions.json")).read_text())
     lines = []
