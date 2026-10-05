@@ -2,7 +2,6 @@
 
 Local graph memory for AI agents. Every answer comes with the path it followed.
 
-[Install](#install) | [Quick start](#quick-start) | [Viewer](#viewer) | [Benchmark](#benchmark)
 
 ![AxonDb screenshot 1](img1.png)
 ![AxonDb screenshot 2](img2.png)
