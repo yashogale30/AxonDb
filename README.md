@@ -2,8 +2,10 @@
 
 Local graph memory for AI agents. Every answer comes with the path it followed.
 
-GIF
-Arcitecture
+[Install](#install) | [Quick start](#quick-start) | [Viewer](#viewer) | [Benchmark](#benchmark)
+
+![AxonDb screenshot 1](img1.png)
+![AxonDb screenshot 2](img2.png)
 
 AxonDb stores memories in SQLite, links the people, projects and tools they mention, and returns the relevant memories together with the path used to find them. Everything runs on your machine.
 
